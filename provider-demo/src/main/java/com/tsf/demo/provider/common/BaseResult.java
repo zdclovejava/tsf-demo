@@ -1,6 +1,7 @@
 package com.tsf.demo.provider.common;
 
-import com.tsf.demo.provider.config.ResultCodeConfig.RetCode;
+import com.tsf.demo.provider.config.EnumConfig.ErrCode;
+import com.tsf.demo.provider.config.EnumConfig.RetCode;
 
 /**
  * 常规信息返回
@@ -21,37 +22,66 @@ import com.tsf.demo.provider.config.ResultCodeConfig.RetCode;
 public final class BaseResult {
 	//返回码
 	private String ret_code;
-	//结果提示
+	//返回提示
 	private String ret_msg;
+	//错误码
+	private String err_code;
+	//错误提示
+	private String err_msg;
 	//返回数据
-	private Object ret_obj;
+	private Object ret_data;
 	
+	private BaseResult(){}
 	
-	public BaseResult(RetCode retCode){
-		this.setRet_code(retCode.getRet_code());
-		this.setRet_msg(retCode.getRet_desc());
-	}
-	public BaseResult(RetCode retCode,Object retObj){
-		this.setRet_code(retCode.getRet_code());
-		this.setRet_msg(retCode.getRet_desc());
-		this.setRet_obj(retObj);
-	}
-	
-	public BaseResult(String retCode,String retMsg){
-		this.setRet_code(retCode);
-		this.setRet_msg(retMsg);
+	/**
+	 * 返回枚举中列出的错误
+	 * @param retCode
+	 * @param errCode
+	 */
+	public BaseResult(RetCode retCode,ErrCode errCode){
+		setRet_code(retCode.getCode());
+		setRet_msg(retCode.getDesc());
+		setErr_code(errCode.getCode());
+		setErr_msg(errCode.getDesc());
 	}
 	
-	public BaseResult(String retCode,String retMsg,Object retObj){
-		this.setRet_code(retCode);
-		this.setRet_msg(retMsg);
-		this.setRet_obj(retObj);
+	/**
+	 * 返回自定义的错误
+	 * @param retCode
+	 * @param errCode
+	 * @param errMsg
+	 */
+	public BaseResult(RetCode retCode,String errCode,String errMsg){
+		setRet_code(retCode.getCode());
+		setRet_msg(retCode.getDesc());
+		setErr_code(errCode);
+		setErr_msg(errMsg);
 	}
 	
-	public BaseResult(Object retObj){
-		this.setRet_code(RetCode.OK.getRet_code());
-		this.setRet_msg(RetCode.OK.getRet_desc());
-		this.setRet_obj(retObj);
+	/**
+	 * 返回成功
+	 * @param retData
+	 */
+	public BaseResult(Object retData){
+		this.setRet_code(RetCode.OK.getCode());
+		this.setRet_msg(RetCode.OK.getDesc());
+		this.setRet_data(retData);
+	}
+	
+	/**
+	 * 返回通用枚举下的自定义错误内容
+	 * @param retCode
+	 * @param errCode
+	 * @param errMsg
+	 * @return
+	 */
+	public static BaseResult getDesignErr(RetCode retCode,ErrCode errCode,String errMsg){
+		BaseResult baseResult = new BaseResult();
+		baseResult.setRet_code(retCode.getCode());
+		baseResult.setRet_msg(retCode.getDesc());
+		baseResult.setErr_code(errCode.getCode());
+		baseResult.setErr_msg(String.format(errCode.getDesc(), errMsg));
+		return baseResult;
 	}
 
 	public String getRet_code() {
@@ -69,14 +99,26 @@ public final class BaseResult {
 	public void setRet_msg(String ret_msg) {
 		this.ret_msg = ret_msg;
 	}
-
-	public Object getRet_obj() {
-		return ret_obj;
+	public Object getRet_data() {
+		return ret_data;
+	}
+	public void setRet_data(Object ret_data) {
+		this.ret_data = ret_data;
+	}
+	public String getErr_code() {
+		return err_code;
+	}
+	public void setErr_code(String err_code) {
+		this.err_code = err_code;
+	}
+	public String getErr_msg() {
+		return err_msg;
+	}
+	public void setErr_msg(String err_msg) {
+		this.err_msg = err_msg;
 	}
 
-	public void setRet_obj(Object ret_obj) {
-		this.ret_obj = ret_obj;
-	}
+	
 
 	
 	

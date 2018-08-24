@@ -1,9 +1,8 @@
 package com.tsf.demo.provider.common;
 
 import java.util.List;
-
 import com.github.pagehelper.PageInfo;
-import com.tsf.demo.provider.config.ResultCodeConfig.RetCode;
+
 
 /**
  * 带分页信息的数据集返回
@@ -21,11 +20,7 @@ import com.tsf.demo.provider.config.ResultCodeConfig.RetCode;
  * 版权:   版权所有(C)2018
  * 公司:   深圳市至高通信技术发展有限公司
  */
-public class PageResult {
-	//返回码
-	private String ret_code;
-	//返回信息
-	private String ret_msg;
+public class PageData {
 	//总数据条数
 	private long data_count=0;
 	//当前数据条数
@@ -38,17 +33,9 @@ public class PageResult {
 	private long page_size=0;
 	//结果集
 	private List<Object> ret_data;
-	
-	
-	public PageResult(String retCode,String retMsg){
-		this.setRet_code(retCode);
-		this.setRet_msg(retMsg);
-	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public PageResult(PageInfo pageInfo){
-		this.setRet_code(RetCode.OK.getRet_code());
-		this.setRet_msg(RetCode.OK.getRet_desc());
+	public PageData(PageInfo pageInfo){
 		this.setRet_data(pageInfo.getList());
 		this.setData_count(pageInfo.getTotal());
 		this.setCurr_count(pageInfo.getSize());
@@ -56,23 +43,7 @@ public class PageResult {
 		this.setCurr_page(pageInfo.getPageNum());
 		this.setPage_size(pageInfo.getPageSize());
 	}
-
-	public String getRet_code() {
-		return ret_code;
-	}
-
-	public void setRet_code(String ret_code) {
-		this.ret_code = ret_code;
-	}
-
-	public String getRet_msg() {
-		return ret_msg;
-	}
-
-	public void setRet_msg(String ret_msg) {
-		this.ret_msg = ret_msg;
-	}
-
+	
 	public long getData_count() {
 		return data_count;
 	}

@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.github.pagehelper.PageInfo;
 import com.tsf.demo.provider.common.BaseResult;
-import com.tsf.demo.provider.common.PageResult;
+import com.tsf.demo.provider.common.PageData;
 import com.tsf.demo.provider.config.ProviderNameConfig;
-import com.tsf.demo.provider.config.ResultCodeConfig.RetCode;
 import com.tsf.demo.provider.model.PageParam;
 import com.tsf.demo.provider.model.SysMenu;
 import com.tsf.demo.provider.model.SysUser;
@@ -58,7 +58,7 @@ public class ApiController {
 		String result = "request param: " + param + ", response from " + providerNameConfig.getName();
 		LOG.info("provider-demo -- provider config name: [" + providerNameConfig.getName() + ']');
 		LOG.info("provider-demo -- response info: [" + result + "]");
-		return new BaseResult(RetCode.OK,result);
+		return new BaseResult(result);
 	}
 	
 	/**
@@ -66,10 +66,10 @@ public class ApiController {
 	 * @return
 	 */
 	@RequestMapping(value = "/users/{pageNum}/{pageSize}", method = RequestMethod.GET)
-	public PageResult users(@PathVariable Integer pageNum,@PathVariable Integer pageSize){
+	public BaseResult users(@PathVariable Integer pageNum,@PathVariable Integer pageSize){
 		PageParam pageParam = new PageParam(pageNum,pageSize);
 		PageInfo<SysUser> pageUser= userService.findUserPage(null,pageParam);
-		return new PageResult(pageUser);
+		return new BaseResult(new PageData(pageUser));
 	}
 	
 	/**
@@ -77,19 +77,21 @@ public class ApiController {
 	 * @return
 	 */
 	@RequestMapping(value = "/menus", method = RequestMethod.POST)
-	public PageResult menus(PageParam pageParam){
+	public BaseResult menus(PageParam pageParam){
 		PageInfo<SysMenu> pageMenu= menuService.findMenuPage(null,pageParam);
-		return new PageResult(pageMenu);
+		return new BaseResult(new PageData(pageMenu));
 	}
+	
+	
 	
 	/**
 	 * 远程调用menus
 	 * @return
 	 */
 	@RequestMapping(value = "/rb/menus", method = RequestMethod.POST)
-	public PageResult rbmenus(@RequestBody PageParam pageParam){
+	public BaseResult rbmenus(@RequestBody PageParam pageParam){
 		PageInfo<SysMenu> pageMenu= menuService.findMenuPage(null,pageParam);
-		return new PageResult(pageMenu);
+		return new BaseResult(new PageData(pageMenu));
 	}
 	
 	/**
@@ -97,9 +99,9 @@ public class ApiController {
 	 * @return
 	 */
 	@RequestMapping(value = "/rp/menus", method = RequestMethod.POST)
-	public PageResult rpmenus(@RequestParam Integer pageNum,@RequestParam Integer pageSize){
+	public BaseResult rpmenus(@RequestParam Integer pageNum,@RequestParam Integer pageSize){
 		PageParam pageParam = new PageParam(pageNum,pageSize);
 		PageInfo<SysMenu> pageMenu= menuService.findMenuPage(null,pageParam);
-		return new PageResult(pageMenu);
+		return new BaseResult(new PageData(pageMenu));
 	}
 }

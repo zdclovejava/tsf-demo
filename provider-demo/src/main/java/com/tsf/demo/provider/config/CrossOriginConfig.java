@@ -1,6 +1,5 @@
 package com.tsf.demo.provider.config;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -20,7 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * 版权:   版权所有(C)2018
  * 公司:   深圳市至高通信技术发展有限公司
  */
-@Configuration
+//@Configuration
 public class CrossOriginConfig extends WebMvcConfigurerAdapter{
 	//GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS, TRACE
 	@Override

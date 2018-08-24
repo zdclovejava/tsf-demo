@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.tsf.demo.provider.common.BaseResult;
-import com.tsf.demo.provider.config.ResultCodeConfig.RetCode;
+import com.tsf.demo.provider.config.EnumConfig.ErrCode;
+import com.tsf.demo.provider.config.EnumConfig.RetCode;
 
 /**
  * 异常统一捕获处理类
@@ -41,7 +42,8 @@ public class MyExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public BaseResult handlerMyException(Exception ex) {
         LOG.error(ex.getMessage());
-        return new BaseResult(RetCode.SYS_ERR);
+        return new BaseResult(RetCode.SYS_ERR,ErrCode.COM_SYS_ERR.getCode(),
+        		String.format(ErrCode.COM_SYS_ERR.getDesc(),ex.getMessage()));
     }
 
 	/**
@@ -53,6 +55,7 @@ public class MyExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public BaseResult handlerMyRuntimeException(RuntimeException ex) {
     	LOG.error(ex.getMessage());
-        return new BaseResult(RetCode.SYS_ERR);
+    	return new BaseResult(RetCode.RUN_ERR,ErrCode.COM_RUN_ERR.getCode(),
+        		String.format(ErrCode.COM_RUN_ERR.getDesc(),ex.getMessage()));
     }
 }
