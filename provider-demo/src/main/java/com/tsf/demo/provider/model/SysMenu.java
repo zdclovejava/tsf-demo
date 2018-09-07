@@ -1,6 +1,7 @@
 package com.tsf.demo.provider.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class SysMenu implements Serializable{
    
@@ -21,6 +22,8 @@ public class SysMenu implements Serializable{
     private String menuIco;
 
     private Integer menuRdx;
+    
+    private List<SysMenu> childList;
 
     public Integer getMenuId() {
         return menuId;
@@ -84,6 +87,28 @@ public class SysMenu implements Serializable{
 
     public void setMenuRdx(Integer menuRdx) {
         this.menuRdx = menuRdx;
+    }
+
+	public List<SysMenu> getChildList() {
+		return childList;
+	}
+
+	public void setChildList(List<SysMenu> childList) {
+		this.childList = childList;
+	}
+	
+	@Override
+    public boolean equals(Object obj) {
+        if (obj instanceof SysMenu) {
+        	SysMenu menu= (SysMenu) obj;
+            return this.menuId==menu.getMenuId();
+        }
+        return false;
+    }
+    
+    @Override
+    public int hashCode() {//重写hashCode方法
+        return menuId.hashCode();
     }
 
 	

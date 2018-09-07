@@ -71,7 +71,11 @@ public class UserController extends BaseController{
 		}
 		//获取用户菜单列表
 		List<SysMenu> menuList = menuService.findMenuByUserId(user.getUserId());
-		user.setMenuList(menuList);
+		SysMenu rootMenu = new SysMenu();
+		rootMenu.setMenuId(0);
+		menuService.parseUserMenu(rootMenu, menuList);
+		user.setMenuList(rootMenu.getChildList());
+		user.setToken(user.getLoginName());
 		//将用户信息保存至session
 		super.setSession("user", user);
 		//校验通过后返回用户信息

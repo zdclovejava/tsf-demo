@@ -45,6 +45,8 @@ public class SysUser implements Serializable{
 	private Date updDate;
 
 	private List<SysMenu> menuList;
+	
+	private String token;
 
 	
 	
@@ -142,6 +144,16 @@ public class SysUser implements Serializable{
 
 	public void setMenuList(List<SysMenu> menuList) {
 		this.menuList = menuList;
+	}
+
+	
+	
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	@Override
